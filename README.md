@@ -1,42 +1,94 @@
 
 # Rapport
 
-**Skriv din rapport här!**
-
-_Du kan ta bort all text som finns sedan tidigare_.
-
-## Följande grundsyn gäller dugga-svar:
-
-- Ett kortfattat svar är att föredra. Svar som är längre än en sida text (skärmdumpar och programkod exkluderat) är onödigt långt.
-- Svaret skall ha minst en snutt programkod.
-- Svaret skall inkludera en kort övergripande förklarande text som redogör för vad respektive snutt programkod gör eller som svarar på annan teorifråga.
-- Svaret skall ha minst en skärmdump. Skärmdumpar skall illustrera exekvering av relevant programkod. Eventuell text i skärmdumpar måste vara läsbar.
-- I de fall detta efterfrågas, dela upp delar av ditt svar i för- och nackdelar. Dina för- respektive nackdelar skall vara i form av punktlistor med kortare stycken (3-4 meningar).
-
-Programkod ska se ut som exemplet nedan. Koden måste vara korrekt indenterad då den blir lättare att läsa vilket gör det lättare att hitta syntaktiska fel.
-
+Namnet ändrades i strings.xml
+Kodsnutt:
 ```
-function errorCallback(error) {
-    switch(error.code) {
-        case error.PERMISSION_DENIED:
-            // Geolocation API stöds inte, gör något
-            break;
-        case error.POSITION_UNAVAILABLE:
-            // Misslyckat positionsanrop, gör något
-            break;
-        case error.UNKNOWN_ERROR:
-            // Okänt fel, gör något
-            break;
+ <string name="app_name">BestAppEu</string>
+ ```
+
+Åtkomst till internet tilläts i AndroidManifest.xml.
+Kodsnutt:
+```
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.webviewapp">
+    <uses-permission android:name="android.permission.INTERNET"/>
+ ```
+
+Webview element skapades med ID: @+id/my_webview i activity_main.xml
+Kodsnutt:
+```
+<WebView
+        android:id="@+id/my_webview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+  ```
+
+Skapade privat medlem kallad myWebview i "onCreate()" i MainActivity.java
+Kodsnutt:
+```
+private WebView myWebView;
+```
+
+Lokaliserade WebView elementet genom att använda Webview ID i MainActivity.java
+Kodsnutt:
+```
+myWebView = findViewById(R.id.my_webview);
+```
+
+Skapade en ny WebView client att sätta ihop med vår WebView i MainActivity.java
+Kodsnutt:
+```
+myWebView.setWebViewClient(new WebViewClient());
+```
+
+Tillät WebViewClient att använda javascript i MainActivity.java och la till en html-fil i assets mappen.
+Kodsnutt:
+```
+myWebView.getSettings().setJavaScriptEnabled(true);
+```
+
+Sedan implementerades funktionerna för external och internal WebPage tillsammans med respektive adresser i MainActivity.java
+```
+public void showExternalWebPage(){
+        myWebView.loadUrl("https://his.se");
     }
-}
+
+    public void showInternalWebPage(){
+        myWebView.loadUrl("file:///android_asset/minfil.html");
+
+    }
+    private WebView myWebView;
 ```
 
-Bilder läggs i samma mapp som markdown-filen.
+Slutligen för att få dessa funktioner att fungera med klick på dropdown-menyn läggs 
+funktionerna inom if-satser i funktionen onOptionsItemSelected() i MainActivity.java.
+```
+public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
 
-![](android.png)
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_external_web) {
+            Log.d("==>","Will display external web page");
+            showExternalWebPage();
+            return true;
+        }
 
-Läs gärna:
+        if (id == R.id.action_internal_web) {
+            Log.d("==>","Will display internal web page");
+            showInternalWebPage();
+            return true;
+        }
 
-- Boulos, M.N.K., Warren, J., Gong, J. & Yue, P. (2010) Web GIS in practice VIII: HTML5 and the canvas element for interactive online mapping. International journal of health geographics 9, 14. Shin, Y. &
-- Wunsche, B.C. (2013) A smartphone-based golf simulation exercise game for supporting arthritis patients. 2013 28th International Conference of Image and Vision Computing New Zealand (IVCNZ), IEEE, pp. 459–464.
-- Wohlin, C., Runeson, P., Höst, M., Ohlsson, M.C., Regnell, B., Wesslén, A. (2012) Experimentation in Software Engineering, Berlin, Heidelberg: Springer Berlin Heidelberg.
+        return super.onOptionsItemSelected(item);
+    }
+```
+
+
+
+![](Screenshot_20240402_164447.png)
+
