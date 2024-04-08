@@ -89,6 +89,8 @@ public boolean onOptionsItemSelected(MenuItem item) {
 ```
 
 
-
+External
 ![](Screenshot_20240402_164447.png)
 
+Internal screenshot
+![](Screenshot_20240408_160121.png)
