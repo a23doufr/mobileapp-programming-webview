@@ -93,4 +93,4 @@ External
 ![](Screenshot_20240402_164447.png)
 
 Internal screenshot
-![](Screenshot_20240408_160121.png)
+![](Screenshot_20240402_164513.png)
